@@ -50,7 +50,7 @@ export function scoreLead(lead: Pick<Lead, "industry" | "employee_range" | "runs
   if (lead.publishes_video) score += 30;
   if (lead.runs_paid_ads) score += 25;
   if (lead.in_house_team) score += 20;
-  score += INDUSTRY_POINTS[lead.industry] ?? INDUSTRY_POINTS["Other"];
+  score += INDUSTRY_POINTS[lead.industry] ?? 4;
   score += SIZE_POINTS[lead.employee_range] ?? 4;
   return Math.max(0, Math.min(100, score));
 }
@@ -196,12 +196,12 @@ export function parseCsv(text: string): ParseResult {
   if (lines.length === 0) return { leads: [], errors: ["Nothing to import."] };
 
   let start = 0;
-  const first = splitCsvLine(lines[0]).map((c) => c.toLowerCase());
+  const first = splitCsvLine(lines[0] ?? "").map((c) => c.toLowerCase());
   if (first[0]?.includes("company")) start = 1;
 
   const leads: LeadInput[] = [];
   for (let i = start; i < lines.length; i++) {
-    const cells = splitCsvLine(lines[i]);
+    const cells = splitCsvLine(lines[i] ?? "");
     const company = cells[0];
     if (!company) {
       errors.push(`Row ${i + 1}: missing company name — skipped.`);
