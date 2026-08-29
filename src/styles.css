@@ -162,3 +162,30 @@
     color: var(--color-foreground);
   }
 }
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-image:
+      radial-gradient(900px 500px at 12% -10%, oklch(0.35 0.09 200 / 0.35), transparent 65%),
+      radial-gradient(700px 420px at 92% 0%, oklch(0.35 0.1 285 / 0.3), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+@utility panel {
+  background-color: color-mix(in oklab, var(--surface) 88%, transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(8px);
+}
+
+@utility accent-glow {
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 35%, transparent),
+    0 12px 40px -18px color-mix(in oklab, var(--primary) 70%, transparent);
+}
